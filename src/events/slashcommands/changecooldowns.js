@@ -28,8 +28,22 @@ module.exports = {
 			}finally{
 				if(checkPerms(interaction.member,interaction)) {
 					let ops = interaction.options._hoistedOptions;
+                    let oldCool;
 					for(var i = 0; i < ops.length; i++) {
+                        oldCool = cooldownObj.cooldowns[ops[i].name]
+                        console.log("hi")
 						cooldownObj.cooldowns[ops[i].name] = Math.floor(ops[i].value * 60)
+                        for(var j in cooldownObj.statistics.userStatistics) {
+                            console.log(j)
+                            console.log(cooldownObj.statistics.userStatistics[j].lastAction)
+                            console.log(ops[i].name)
+                            if(cooldownObj.statistics.userStatistics[j].lastAction == ops[i].name && cooldownObj.users[j] > Date.now()/1000) {
+                                console.log("ye")
+                                cooldownObj.users[j] -= oldCool - cooldownObj.cooldowns[ops[i].name];
+                            }
+                                 
+                        }
+                        if((ops[i].name == "background" || ops[i].name == "name") && cooldownObj[ops[i].name] != undefined) cooldownObj[ops[i].name] -= oldCool - cooldownObj.cooldowns[ops[i].name];
 					}
 					let cooldowns = cooldownObj.cooldowns;
 					let toSend;
