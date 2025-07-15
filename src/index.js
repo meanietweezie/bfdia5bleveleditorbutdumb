@@ -155,7 +155,7 @@ let statevalues = [3,4,5,6,8,9,10]
 
 client.commands = new Collection();
 
-onst gameEmojis = [
+const gameEmojis = [
     [
         "➖","🟥","🔽","🔼","▶️","◀️","🚪","🎋","💬","🔴","🟩","🟢","🪙","🔝","⏮️","🔥","⏭️","✴️","⏫","⬇️","⬆️","➡️","⬅️","⏏️","🕕","🕞","📛","🕘","♊","🕒","🕤","🌕","🌝","🌑","🌚","🌛","🌜","🔍","🔎","💚","📙","📘","🏔️","⛰️","⏩","↩️","↪️","🌫️","⚫","💡","🪨","1️⃣","☑️","0️⃣","🔘","🗻","⬜","🪒","🧪","🌴","🍀","❎","☘️","🎄","🌲","✅","🕯️","🔳","⏪","⏬","🚎","📗","✴️","🟪","🏁","🚦","🚥","🟣","⭐","🌟","🌳","🌔","🌘","🔙","👈","🔜","👉","↙️","↘️","ℹ️","⛔","✝️","☦️","🟫","🟤","⚠️","↗️","↖️","🩶","💩","🍋‍🟩","♻️","🟨","🔶","🔸","❤️","🟡","🖤","🔦","✒️","🖼️","","","","","","","","","","","","","","","","","","","","🌊","🧱","🔤","☔","☂️"
     ],
@@ -586,8 +586,11 @@ client.on(Events.InteractionCreate, async interaction => {
                     levelPath = path.join(__dirname,"leveldatafold/" + String(rowNow[2]) + ".txt")
                     cooldownPath = path.join(__dirname,"cooldowndatafold/" + String(rowNow[2]) + ".txt")
                     if(rowNow[0] == "row") {
-                        let rowCopy = levelDataObj[rowNow[2]].levelData[rowNow[1]];
+                        let rowCopy = levelDataObj[rowNow[2].levelData[rowNow[1]];
                         levelDataObj[rowNow[2]].levelData.splice(rowNow[1],0,rowCopy)
+                        for(let i = 0; i < levelDataObj[rowNow[2]].charData.length; i++) {
+                            if(levelDataObj[rowNow[2]].charData[i].ypos >= rowNow[1]) levelDataObj[rowNow[2]].charData[i].ypos++;
+                        }
                         try{
                             interaction.editReply({content:"row added!",flags:MessageFlags.Ephemeral})
                         }catch(error){
@@ -607,6 +610,7 @@ client.on(Events.InteractionCreate, async interaction => {
                             let curTile = levelDataObj[rowNow[2]].levelData[y][rowNow[1]]
                             levelDataObj[rowNow[2]].levelData[y].splice(rowNow[1],0,curTile)
                         }
+                        if(levelDataObj[rowNow[2]].charData[i].xpos >= rowNow[1]) levelDataObj[rowNow[2]].charData[i].xpos++;
                         try{
                             interaction.editReply({content:"column added!",flags:MessageFlags.Ephemeral})
                         }catch(error){
