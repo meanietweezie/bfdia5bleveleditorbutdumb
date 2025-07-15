@@ -92,6 +92,7 @@ module.exports = {
 	}
 }
 function markStatistic(user,type,obj,editNum) {
+    let typeAction = type;
     if(obj.statistics.userStatistics[user] == undefined) {
         obj.statistics.userStatistics[user] = new Object();
     }
@@ -112,25 +113,31 @@ function markStatistic(user,type,obj,editNum) {
             
         }
         obj.statistics["rect"]++;
+        obj.statistics["rectCommands"]++;
         obj.statistics.userStatistics[user]["rect"]++;
         obj.statistics.userStatistics[user]["rectCommands"]++;
+        typeAction = "rect"
     }else{
         obj.statistics.userStatistics[user][type+"Commands"]++;
     }
     obj.statistics[type]+=editNum;
     if(obj.statistics[type+"Commands"] == undefined) obj.statistics[type+"Commands"] = 0;
-    obj.statistics[type+"Commands"]++;
+    if(!(type == "tile" && editNum > 1)) obj.statistics[type+"Commands"]++;
     if(obj.statistics.userStatistics[user]["actions"] == undefined) {
         obj.statistics.userStatistics[user]["actions"] = 0;
     }
     obj.statistics.userStatistics[user]["actions"]++;
+    obj.statistics.userStatistics[user].lastAction = type;
     obj.statistics.actions ++;
-    console.log(JSON.stringify(obj))
     return obj;
 }
 function checkPerms(member,interactionn) {
     perms = member.permissionsIn(interactionn.channel).has("0x0000000000000020")
     let roleOBJ = member.roles.valueOf();
+134
+    rolePerm = false;
+135
+    for(let i = 0; i < cooldownObj.managerRoles.length; i ++) {
     rolePerm = false;
     for(let i = 0; i < cooldownObj.managerRoles.length; i ++) {
         if(roleOBJ.get(cooldownObj.managerRoles[i]) != undefined) rolePerm = true;
