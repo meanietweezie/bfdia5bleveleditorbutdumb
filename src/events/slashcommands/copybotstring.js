@@ -10,7 +10,7 @@ module.exports = {
         async execute(interaction) {
                 
                 interaction.deferReply({content: "Here is the data of the current level. Make sure to keep it safe if you want to edit it later!", flags:MessageFlags.Ephemeral}).then(() => {
-                        let bufferpath = path.join(__dirname,"levelbuffer.txt")
+                        let bufferpath = path.join(parentPath,"/levelbuffer.txt")
                         let currentLevelPath = path.join(levelPath,String(interaction.guildId) + ".txt")
                         let data = fs.readFileSync(currentLevelPath)
                         fs.writeFileSync(bufferpath,data)
