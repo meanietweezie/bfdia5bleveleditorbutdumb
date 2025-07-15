@@ -31,14 +31,9 @@ module.exports = {
                     let oldCool;
 					for(var i = 0; i < ops.length; i++) {
                         oldCool = cooldownObj.cooldowns[ops[i].name]
-                        console.log("hi")
 						cooldownObj.cooldowns[ops[i].name] = Math.floor(ops[i].value * 60)
                         for(var j in cooldownObj.statistics.userStatistics) {
-                            console.log(j)
-                            console.log(cooldownObj.statistics.userStatistics[j].lastAction)
-                            console.log(ops[i].name)
                             if(cooldownObj.statistics.userStatistics[j].lastAction == ops[i].name && cooldownObj.users[j] > Date.now()/1000) {
-                                console.log("ye")
                                 cooldownObj.users[j] -= oldCool - cooldownObj.cooldowns[ops[i].name];
                             }
                                  
