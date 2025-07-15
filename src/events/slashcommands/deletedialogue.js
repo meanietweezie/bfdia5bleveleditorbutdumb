@@ -134,10 +134,6 @@ function markStatistic(user,type,obj,editNum) {
 function checkPerms(member,interactionn) {
     perms = member.permissionsIn(interactionn.channel).has("0x0000000000000020")
     let roleOBJ = member.roles.valueOf();
-134
-    rolePerm = false;
-135
-    for(let i = 0; i < cooldownObj.managerRoles.length; i ++) {
     rolePerm = false;
     for(let i = 0; i < cooldownObj.managerRoles.length; i ++) {
         if(roleOBJ.get(cooldownObj.managerRoles[i]) != undefined) rolePerm = true;
