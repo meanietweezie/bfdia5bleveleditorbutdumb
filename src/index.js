@@ -229,13 +229,14 @@ client.on(Events.InteractionCreate, async interaction => {
         }
         if(interaction.commandName == "level-add-tile") {
             interaction.deferReply({flags:MessageFlags.Ephemeral}).then(() => {
+                checkSettingsFile(interaction.guildId);
                 let emojiIndex = interaction.options.getString("tile").search(emojiRegE)
                 let idthig = interaction.guildId;
                 levelPath = path.join(__dirname,"leveldatafold/" + String(idthig) + ".txt")
                 cooldownPath = path.join(__dirname,"cooldowndatafold/" + String(idthig) + ".txt")
                 let timeLeft = (cooldownObj[idthig].users[String(interaction.user.id)] != undefined) ? Math.floor(Date.now() / 1000) - cooldownObj[idthig].users[interaction.user.id] : 0;
                 if(timeLeft < 0 && !checkPerms(interaction.member,interaction)) {
-                    interaction.editReply({content:"Too soon! Wait `" + formSec(-timeLeft) + " until you can do another action.",flags:MessageFlags.Ephemeral})
+                    interaction.editReply({content:"Too soon! Wait " + formSec(-timeLeft) + " until you can do another action.",flags:MessageFlags.Ephemeral})
                 }else{
                     if(emojiIndex == -1) {
                         interaction.editReply("please send a string with an actual emoji in it")
@@ -266,6 +267,7 @@ client.on(Events.InteractionCreate, async interaction => {
                                                 levelDataObj[idthig].levelData[levelDataObj[idthig].endCoord[1]][levelDataObj[idthig].endCoord[0]] = 0;
                                                 interaction.channel.send(`<@${interaction.user.id}> changed the position of the ${gameEmojis[1][numberThing-1].toLowerCase()} to tile ${xpos}x${ypos}!`)
                                                 levelDataObj[idthig].endCoord = [xpos-1,ypos-1]
+                                                levelDataObj[idthig].levelData[ypos-1][xpos-1] = numberThing - 1;
                                             }
                                         }else if(numberThing-1 == 12) {
                                             if(levelDataObj[idthig].tokenCoord == undefined) {
@@ -276,6 +278,7 @@ client.on(Events.InteractionCreate, async interaction => {
                                                 levelDataObj[idthig].levelData[levelDataObj[idthig].tokenCoord[1]][levelDataObj[idthig].tokenCoord[0]] = 0;
                                                 interaction.channel.send(`<@${interaction.user.id}> changed the position of the ${gameEmojis[1][numberThing-1].toLowerCase()} to tile ${xpos}x${ypos}!`)
                                                 levelDataObj[idthig].tokenCoord = [xpos-1,ypos-1]
+                                                levelDataObj[idthig].levelData[ypos-1][xpos-1] = numberThing - 1;
                                             }
                                         }else{
                                             interaction.channel.send(`<@${interaction.user.id}> placed a(n) ${gameEmojis[1][numberThing-1].toLowerCase()} at tile ${xpos}x${ypos}!`)
@@ -1184,6 +1187,7 @@ function formSec(nubmer) {
 	return minutes + " minutes and " + seconds + " seconds"
 }
 function markStatistic(user,type,obj,editNum) {
+    let typeAction = type;
     if(obj.statistics.userStatistics[user] == undefined) {
         obj.statistics.userStatistics[user] = new Object();
     }
@@ -1207,6 +1211,7 @@ function markStatistic(user,type,obj,editNum) {
         obj.statistics["rectCommands"]++;
         obj.statistics.userStatistics[user]["rect"]++;
         obj.statistics.userStatistics[user]["rectCommands"]++;
+        typeAction = "rect"
     }else{
         obj.statistics.userStatistics[user][type+"Commands"]++;
     }
@@ -1217,6 +1222,7 @@ function markStatistic(user,type,obj,editNum) {
         obj.statistics.userStatistics[user]["actions"] = 0;
     }
     obj.statistics.userStatistics[user]["actions"]++;
+    obj.statistics.userStatistics[user].lastAction = type;
     obj.statistics.actions ++;
     return obj;
 }
