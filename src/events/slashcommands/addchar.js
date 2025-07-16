@@ -4,7 +4,6 @@ const fs = require("node:fs");
 let parentPath = String(__dirname).slice(0,String(__dirname).lastIndexOf("src")+3)
 let levelPath = path.join(parentPath,"/leveldatafold")
 let cooldownPath = path.join(parentPath,"/cooldowndatafold")
-let cooldownObj;
 const charNames = [
     "Ruby","Book","Ice Cube","Match","Pencil","Bubble","Lego Brick","Waffle","Tune","","","","","","","","","","","","","","","","","","","","","","","","","","","HPRC (Wide)","HPRC (Thin)","Crate","Metal Box","Small Gray Platform","Large Spike Ball","Package","Companion Cube","Rusty Apparatus","Purple Enemy","Saw Blade","Small Spike Ball","Metal Pillar","Large Gray Platform","Spinning Blue Spike Ball","Epic Acid Monster","Small Acid Covered Platform","Gold Platform","Green Block","Blue Block","Wall of Spikes"
 ]
@@ -60,6 +59,7 @@ module.exports = {
         let thisLevelPath;
         let thisCoolPath;
         let levelDataObj;
+        let cooldownObj;
         let charnum = interaction.options.getInteger("charnum")
         let emoji = String(interaction.options.getString("emoji"))
         let xpos = interaction.options.getInteger("xpos")
@@ -159,8 +159,8 @@ module.exports = {
                                         }catch(error){
                                             console.log(error)
                                         }finally{
-                                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj))  
-                                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj))   
+                                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj,null,"\t"))  
+                                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj,null,"\t"))   
                                         }
                                     }
                                 }
