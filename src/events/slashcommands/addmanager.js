@@ -64,7 +64,7 @@ module.exports = {
 			let sendThese = [updatedEmbed]
 			if(sendChanges) sendThese.push(changeEmbed);
 			interaction.editReply({content:"Done! Here is the updated list.",embeds:sendThese,flags:MessageFlags.Ephemeral})
-			fs.writeFileSync(cooldownPathHere,JSON.stringify(cooldownObj))
+			fs.writeFileSync(cooldownPathHere,JSON.stringify(cooldownObj,null,"\t"))
 		});
 	}
 }
