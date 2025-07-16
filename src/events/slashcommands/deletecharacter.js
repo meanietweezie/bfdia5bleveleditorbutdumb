@@ -73,8 +73,8 @@ module.exports = {
                         }catch(error){
                             console.log(error)
                         }finally{
-                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj))
-                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj))  
+                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj,null,"\t"))
+                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj,null,"\t"))  
                         }
                                 
                     
