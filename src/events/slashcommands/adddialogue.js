@@ -4,7 +4,6 @@ const fs = require("node:fs");
 let parentPath = String(__dirname).slice(0,String(__dirname).lastIndexOf("src")+3)
 let levelPath = path.join(parentPath,"/leveldatafold")
 let cooldownPath = path.join(parentPath,"/cooldowndatafold")
-let cooldownObj;
 let charNames = [
     "Ruby","Book","Ice Cube","Match","Pencil","Bubble","Lego Brick","Waffle","Tune","","","","","","","","","","","","","","","","","","","","","","","","","","","HPRC (Wide)","HPRC (Thin)","Crate","Metal Box","Small Gray Platform","Large Spike Ball","Package","Companion Cube","Rusty Apparatus","Purple Enemy","Saw Blade","Small Spike Ball","Metal Pillar","Large Gray Platform","Spinning Blue Spike Ball","Epic Acid Monster","Small Acid Covered Platform","Gold Platform","Green Block","Blue Block","Wall of Spikes"
 ]
@@ -74,6 +73,7 @@ module.exports = {
         let thisLevelPath;
         let thisCoolPath;
         let levelDataObj;
+        let cooldownObj;
         let charnum = interaction.options.getInteger("charnum")
         let dialoguenum = interaction.options.getInteger("dialoguenum")
         let happy = interaction.options.getBoolean("happy")
@@ -158,8 +158,8 @@ module.exports = {
                         }catch(error){
                             console.log(error)
                         }finally{
-                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj))
-                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj))  
+                            fs.writeFileSync(thisLevelPath,JSON.stringify(levelDataObj,null,"\t"))
+                            fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj,null,"\t"))  
                         }
                                 
                     }
@@ -171,6 +171,7 @@ module.exports = {
 	}
 }
 function markStatistic(user,type,obj,editNum) {
+    let typeAction = type;
     if(obj.statistics.userStatistics[user] == undefined) {
         obj.statistics.userStatistics[user] = new Object();
     }
@@ -191,20 +192,22 @@ function markStatistic(user,type,obj,editNum) {
             
         }
         obj.statistics["rect"]++;
+        obj.statistics["rectCommands"]++;
         obj.statistics.userStatistics[user]["rect"]++;
         obj.statistics.userStatistics[user]["rectCommands"]++;
+        typeAction = "rect"
     }else{
         obj.statistics.userStatistics[user][type+"Commands"]++;
     }
     obj.statistics[type]+=editNum;
     if(obj.statistics[type+"Commands"] == undefined) obj.statistics[type+"Commands"] = 0;
-    obj.statistics[type+"Commands"]++;
+    if(!(type == "tile" && editNum > 1)) obj.statistics[type+"Commands"]++;
     if(obj.statistics.userStatistics[user]["actions"] == undefined) {
         obj.statistics.userStatistics[user]["actions"] = 0;
     }
     obj.statistics.userStatistics[user]["actions"]++;
+    obj.statistics.userStatistics[user].lastAction = type;
     obj.statistics.actions ++;
-    console.log(JSON.stringify(obj))
     return obj;
 }
 function checkPerms(member,interactionn) {

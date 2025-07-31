@@ -18,6 +18,10 @@ module.exports = {
 		.addNumberOption(option => option.setName("background").setDescription("Change the server cooldown for setting the background.").setMinValue(1)),
 	async execute(interaction) { 
 		interaction.deferReply({flags:MessageFlags.Ephemeral}).then(() => {
+            let cooldownObj;
+            let levelDataObj;
+            let thisLevelPath;
+            let thisCoolPath;
 			try{
 				thisLevelPath = path.join(levelPath,interaction.guildId +".txt")
 				thisCoolPath = path.join(cooldownPath,interaction.guildId +".txt")
@@ -28,8 +32,17 @@ module.exports = {
 			}finally{
 				if(checkPerms(interaction.member,interaction)) {
 					let ops = interaction.options._hoistedOptions;
+                    let oldCool;
 					for(var i = 0; i < ops.length; i++) {
+                        oldCool = cooldownObj.cooldowns[ops[i].name]
 						cooldownObj.cooldowns[ops[i].name] = Math.floor(ops[i].value * 60)
+                        for(var j in cooldownObj.statistics.userStatistics) {
+                            if(cooldownObj.statistics.userStatistics[j].lastAction == ops[i].name && cooldownObj.users[j] > Date.now()/1000) {
+                                cooldownObj.users[j] -= oldCool - cooldownObj.cooldowns[ops[i].name];
+                            }
+                                 
+                        }
+                        if((ops[i].name == "background" || ops[i].name == "name") && cooldownObj[ops[i].name] != undefined) cooldownObj[ops[i].name] -= oldCool - cooldownObj.cooldowns[ops[i].name];
 					}
 					let cooldowns = cooldownObj.cooldowns;
 					let toSend;
@@ -47,7 +60,7 @@ module.exports = {
 					let coolEmbed = new EmbedBuilder().setTitle("Cooldowns").setDescription(toSend);
 					interaction.editReply({content:"updated!"});
 					interaction.channel.send({embeds:[coolEmbed],content:"<@" + interaction.user.id + "> has updated cooldowns!"})
-					fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj))
+					fs.writeFileSync(thisCoolPath,JSON.stringify(cooldownObj,null,"\t"))
 				}else{
 					interaction.editReply({content:"You are not authorized to use this command.", flags:MessageFlags.Ephemeral})
 				}
