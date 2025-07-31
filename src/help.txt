@@ -1,0 +1,45 @@
+## NOTE: While not reflected in parts of the actual level string or 5b code, all values are 1-indexed rather than 0-indexed (for example, to change a tile in the first row and column, use 1 for each instead of 0, or to change an aspect about the 3rd character, put in 3 instead of 2).
+## Info Commands
+### /stats-... - Shows statistics on server actions starting from when the bot was added to the server. Applies across any level loaded with the bot
+**...leaderboard** - Globally displays a leaderboard ordered by how much someone has used the bot, with an option to be tailored to specific statistics. By default, all specific changes will be reflected (for example, adding a tile array of 3x3 adds nine to the tiles statistic, and changing three properties of a character will add three to the character statistic). Toggling on "onlycommands" will limit this to only how much each command was ran. Leaderboard self-deletes after about 30 seconds.
+**...view** - Globally displays an embed of all stats of the server, or a specific user if specified. Message with embed self-deletes after about 30 seconds.
+### Miscellaneous
+**/cooldowns-view** - Shows the specific cooldowns set to a user or server based on the command ran.
+**/help** - i mean do i really
+## Level Commands (/level-...)
+### ...add-... - Adds a new thing to the level. Using these commands successfully will result in a user cooldown that prevents them from adding new things to the level.
+**...tile** - Adds a new tile to the level in the spot given and based on the emoji put in. All supported emojis are in the spreadsheet linked.
+**...tilerect** - Adds an array of up to 5 by 5 tiles to the level in the spot given and based on the emoji put in. All supported emojis are in the spreadsheet linked.
+**...roworcolumn** - Inserts a new row or column into the level, copying the contents of the one present and shifting the rest over.
+### ...set-... - Sets a specific part of a level. Using these commands successfully will result in a server cooldown that prevents everyone in the server from changing that value. 
+**...bg** - Displays a background of choice based on the ID given (up to 12). Also allows to set the viewed background as the one for the level.
+**...name** - Changes the name of the level. All keyboard characters are supported, but most non-keyboard characters are removed if inputted.
+**...deaths** - Changes the necessary deaths of a level (but who gaf).
+### Miscellaneous
+**...viewandcopy** - Privately displays the current level. tilex and tiley can be used to specify a specific top-left corner; otherwise, the command set it to the very first tile. ## Char Commands (/char-...)
+**...view** Displays a list of every character in the level, as well as their properties.
+**...edit** Edits the properties of a character, whether it be a new one ("new" subcommand) or existing ("existing" subcommand).
+**...delete** Deletes a character and all of its associated dialogue.
+heyyeahcutthestringherelol
+## Char Commands (/char-...)
+**...view** Displays a list of every character in the level, as well as their properties.
+**...edit** Edits the properties of a character, whether it be a new one ("new" subcommand) or existing ("existing" subcommand).
+**...delete** Deletes a character and all of its associated dialogue.
+### ...movement-... - Changes the movement data of a specific character. These commands can only be used on characters in the "Moving" or "Deadly and Moving" state.
+**...view** Displays a list of every movement of a character in the level, as well as its distance and direction.
+**...edit** Edits the movement data of a character, whether it be adding a new movement ("new" subcommand), editing an existing one ("existing" subcommand), or deleting an existing one ("delete" subcommand).
+## Dialogue Commands (/dialogue-...)
+**...view** Displays a list of every dialogue in the level from the beginning, as well as its properties. A "View More Dialogue" button will be available if the shown dialogue is not in full due to character limits.
+**...edit** Edits the properties of a line of dialogue, whether it be a new one ("new" subcommand group) or existing ("existing" subcommand group). Dialogue can either be edited as a regular line of dialogue ("normal" subcommands) or as a lever switch event ("switchevent" subcommands).
+**...delete** Deletes any given line of dialogue, switch event or normal.
+## Miscellaneous Commands
+**/level-copybotstring** - Copies the JSON data of the level read by the bot, allowing for it to be reloaded later.
+**/image-to-level** - Fun little command that'll take an image and convert it to a 5b level. You can customize the widths and lengths with the "customdim" subcommand or scale down the original image yourself with the "scale" subcommand. Note that images with a width or height larger than 400 pixels will automatically be downscaled to be 400x400 or lower.
+## Manager Only Commands
+Managers are specific people or roles in the server who have access to specific commands that others cannot use.
+**/level-reset** - Sets all the tiles of the level to the same tile and allows for a new height and width to be chosen.
+**/cooldowns-edit** - Allows to change the cooldowns of any action for that server (however, whether a cooldown is user-based or server-based cannot be edited).
+**/level-loadstring...** Loads in the attached TXT string to the level. "...bot" loads in bot JSON of a level, while "...regular" loads in an HTML5b string (blue slabs included).
+## Admin Only Commands
+**/managers...** Allows to add (or remove) users and roles that have access to manager-only commands...
+If any issues arise or you have any suggestions on how to improve anything, send em through the GitHub repo at https://github.com/meanietweezie/bfdia5bleveleditorbutdumb/issues. thank u
