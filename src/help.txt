@@ -34,7 +34,7 @@ heyyeahcutthestringherelol
 **...delete** Deletes any given line of dialogue, switch event or normal.
 ## Miscellaneous Commands
 **/level-copybotstring** - Copies the JSON data of the level read by the bot, allowing for it to be reloaded later.
-**/image-to-level** - Fun little command that'll take an image and convert it to a 5b level. You can customize the widths and lengths with the "customdim" subcommand or scale down the original image yourself with the "scale" subcommand. Note that images with a width or height larger than 400 pixels will automatically be downscaled to be 400x400 or lower.
+**/imagetolevel** - Fun little command that'll take an image and convert it to a 5b level. You can customize the widths and lengths with the "customdim" subcommand or scale down the dimensions of the original image yourself with the "scale" subcommand. Note that images with a width or height larger than 400 pixels will automatically be downscaled to be 400x400 or lower.
 ## Manager Only Commands
 Managers are specific people or roles in the server who have access to specific commands that others cannot use.
 **/level-reset** - Sets all the tiles of the level to the same tile and allows for a new height and width to be chosen.
