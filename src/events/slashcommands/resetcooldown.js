@@ -90,4 +90,4 @@ function coolGet2(nubmer) {
 	let minutes = Math.floor(nubmer/60)
 	let seconds = nubmer % 60;
 	return minutes + " minutes and " + seconds + " seconds"
-} 
+}

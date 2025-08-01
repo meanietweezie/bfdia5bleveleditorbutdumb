@@ -33,7 +33,7 @@ const rest = new REST().setToken(process.env.TOKEN);
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 		data = await rest.put(
-			Routes.applicationCommands(clientId),
+			Routes.applicationGuildCommands(clientId,"1389020692757876836"), // Replace with your guild ID
 			{ body: commands },
 		);
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
