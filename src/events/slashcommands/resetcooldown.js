@@ -91,3 +91,4 @@ function coolGet2(nubmer) {
 	let seconds = nubmer % 60;
 	return minutes + " minutes and " + seconds + " seconds"
 }
+// hi this is a test
