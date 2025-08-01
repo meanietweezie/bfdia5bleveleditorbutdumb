@@ -8,3 +8,4 @@
 /src/*.webp
 !/src/help.txt
 !/src/index.js
+.gitignore
