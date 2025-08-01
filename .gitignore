@@ -1,0 +1,10 @@
+**/node_modules
+/node_modules
+.env
+/src/*.txt
+/src/*.png
+/src/*.jpeg
+/src/*.jpg
+/src/*.webp
+!/src/help.txt
+!/src/index.js
