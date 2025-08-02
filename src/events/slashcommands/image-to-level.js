@@ -124,7 +124,7 @@ module.exports = {
                                 let level = image.name + "\r\n";
                                 level += width + "," + height + ",00,00,H\r\n";
                                 interaction.editReply(`Image ${image.name} has been converted to a level with dimensions ${width}x${height}.`);
-                                Jimp.read(path.join(parentPath,"newimg.jpeg")).then((img) => {
+                                Jimp.read(path.join(parentPath,"newimg.png")).then((img) => {
 
                                     for(let y = 0; y < height; y++) {
                                         for(let x = 0; x < width; x++) {
